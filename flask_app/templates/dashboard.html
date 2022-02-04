@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>
+            Recetas
+        </title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='./css/style.css') }}">
+    </head>
+    <body>
+        <header>
+            <h1 class="blue-T flex3">
+                Bienvenido {{variables[1]}}
+            </h1>
+            <form action="/recipes/new" method="GET">
+                <button type="submit" class="btn blue-B flex1"> 
+                    Crear 
+                </button>
+            </form>
+            <form action="/logout" method="POST">
+                <button type="submit" class="btn red-B flex1"> 
+                    Cerrar sesión 
+                </button>
+            </form>
+        </header>
+        <main class="column">
+            <h1 class="blue-T">
+                Estas son las recetas
+            </h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Menos de 30 minutos?</th>
+                        <th class="operations">Operaciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for recipe in recipeList %}
+                        <tr>
+                            <td>{{recipe["name"]}}</td>
+                            <td>{{recipe["under"]}}</td>
+                            {% if variables[0] == recipe["user_id"]%}
+                                <td class="operations">
+                                    <form action="/recipes/{{recipe['id']}}" method="GET">
+                                        <button type="submit" class="link blue-T"> 
+                                            Ver instrucciones 
+                                        </button>
+                                    </form>
+                                    <form action="/recipes/edit/{{recipe['id']}}" method="GET"> 
+                                        <button type="submit" class="link blue-T"> 
+                                            Editar 
+                                        </button>
+                                    </form>
+                                    <form action="/recipes/{{recipe['id']}}/destroy" method="POST">
+                                        <button type="submit" class="link blue-T"> 
+                                            Borrar 
+                                        </button>
+                                    </form>
+                                </td>
+                            {% else %}
+                                {% if recipe['key_likes'] == 0 %}
+                                <td class="operations">
+                                    <form action="/recipes/{{recipe['id']}}" method="GET">
+                                        <button type="submit" class="link blue-T"> 
+                                            Ver instrucciones 
+                                        </button>
+                                    </form>
+                                    <form action="/recipes/{{recipe['id']}}/like" method="POST">
+                                        <button type="submit" class="link blue-T"> 
+                                            Like 
+                                        </button>
+                                    </form>
+                                </td>
+                                {% else %}
+                                    <td class="operations">
+                                        <form action="/recipes/{{recipe['id']}}" method="GET">
+                                            <button type="submit" class="link blue-T"> 
+                                                Ver instrucciones 
+                                            </button>
+                                        </form>
+                                        <form action="/recipes/{{recipe['id']}}/like" method="POST">
+                                            <button type="submit" class="link blue-T"> 
+                                                Un-Like 
+                                            </button>
+                                        </form>
+                                    </td>
+                                {% endif %}
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </main>
+    </body>
+</html>

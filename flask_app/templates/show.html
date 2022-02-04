@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>
+            Recetas
+        </title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='./css/style.css') }}">
+    </head>
+    <body>
+        <header>
+            <h1 class="blue-T flex3">
+                Bienvenido {{variables[1]}}
+            </h1>
+            <form action="/dashboard" method="GET">
+                <button type="submit" class="btn blue-B flex1"> 
+                    Inicio 
+                </button>
+            </form>
+            <form action="/logout" method="POST">
+                <button type="submit" class="btn red-B flex1"> 
+                    Cerrar sesión 
+                </button>
+            </form>
+        </header>
+        <main class="column"> 
+            <div class="row">
+                <h1 class="blue-T">
+                    {{recipe["name"]}}
+                </h1>
+                <h1 class="green-T">
+                    {{recipe["likes"]}} likes
+                </h1>
+            </div>
+            <div class="container">
+                <h5>
+                    Descripción: {{recipe["description"]}}
+                </h5>
+                <h5>
+                    Menos de 30 minutos? {{recipe["under"]}}
+                </h5>
+                <h5>
+                    Instrucciones: {{recipe["instruction"]}}
+                </h5>
+                <h5>
+                    Fecha de creación: {{recipe["date_on"]}}
+                </h5>
+                <h5>
+                    Publicado por: {{variables[1]}}
+                </h5>
+            </div>
+        </main>
+    </body>
+</html>

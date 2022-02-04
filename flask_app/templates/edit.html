@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>
+            Recetas
+        </title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='./css/style.css') }}">
+    </head>
+    <body>
+        <header>
+            <h1 class="blue-T flex3">
+                Editar Receta
+            </h1>
+            <form action="/dashboard" method="GET">
+                <button type="submit" class="btn blue-B flex1"> 
+                    Inicio 
+                </button>
+            </form>
+            <form action="/logout" method="POST">
+                <button type="submit" class="btn red-B flex1"> 
+                    Cerrar sesión 
+                </button>
+            </form>
+        </header>
+        <main>
+            
+            <div class="container">
+                <div class="error red-T">
+                    {% with messages = get_flashed_messages(category_filter=['show']) %}
+                        {% for message in messages %}
+                            <p>
+                                {{message}}
+                            </p>
+                        {% endfor %}
+                    {% endwith %}
+                </div>
+            <form action="/recipes/edit/{{recipe['id']}}" method="POST">
+                <div class="row">
+                    <div class="flex3">
+                        <div class="inputs">
+                            <label for="name">
+                                Nombre:
+                            </label>
+                            <input type="text" id="name" name="name" value="{{recipe['name']}}"/>
+                        </div>
+                        <div class="inputs">
+                            <label for="description">
+                                Descripción:
+                            </label>
+                            <textarea placeholder="{{recipe['description']}}" id="description" name="description" value="{{recipe['description']}}"></textarea>
+                        </div>
+                    </div>
+                    <div class="flex1"></div>
+                    <div class="flex3">
+                        <div class="inputs">
+                            <label for="date_on">
+                                Fecha de realización:
+                            </label>
+                            <input type="date" id="date_on" name="date_on" value="{{recipe['date_on']}}"/>
+                        </div>
+                        <div class="inputs">
+                            <label for="under">
+                                Menos de 30 minutos?
+                            </label>
+                            <div>
+                                <input type="radio" id="under" name="under" value="yes" checked>
+                                <label for="under">Si</label>
+                                <input type="radio" id="under" name="under" value="no">
+                                <label for="under">No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="inputs">
+                    <label for="instruction">
+                        Instrucciones:
+                    </label>
+                    <textarea placeholder="{{recipe['instruction']}}" id="instruction" name="instruction" value="{{recipe['instruction']}}"></textarea>
+                </div>
+                <button type="submit" class="btn green-B">
+                    Crear
+                </button>
+            </form>
+        </main>
+    </body>
+</html>
